@@ -1,11 +1,5 @@
 import pandas as p
 import math
-datas = p.read_excel('CANIS_PRC_state_media_on_social_media_platforms-2023-11-03.xlsx')
-wanted_data = ["Name (English)", "Region of Focus", "Language", "Entity owner (English)", "Parent entity (English)", "X (Twitter) URL",
-               "X (Twitter) Follower #", "Facebook URL", "Facebook Follower #"]
-
-list_data = []
-
 
 class Data:
     """Data from the Excel is read here
@@ -17,6 +11,15 @@ class Data:
         self.name = name
         self.values = []
 
+    def get_name(self):
+        return self.name
+
+    def get_value(self, i):
+
+        if len(self.values) == 0 or i >= len(self.values):
+            return False
+        else:
+            return self.values[i]
     def add_values(self, value: tuple) -> None:
         """Add the value to the list as tuple"""
         self.values.append(value)
@@ -30,11 +33,11 @@ class Data:
             print(f"{curr_value[0]}: {curr_value[1]}")
 
 
-def extract_all_data() -> None:
+def extract_all_data(datas, wanted_data, list_data) -> None:
     """Extract all data from the DataFrame
         Only if the data exist
     """
-    for i in range(1, 50):
+    for i in range(0, 758):
         curr = datas.iloc[i].to_dict()
         new_data = Data(curr[wanted_data[0]])
         # read the current data
@@ -50,13 +53,13 @@ def extract_all_data() -> None:
         list_data.append(new_data)
 
 
-def print_all_data() -> None:
+def print_all_data(list_data) -> None:
     """ Print all Data in the class"""
     for i in range(len(list_data)):
         print(f"{i + 1}-------------------------------------")
         list_data[i].print_data()
 
-
-if __name__ == '__main__':
-    extract_all_data()
-    print_all_data()
+#
+# if __name__ == '__main__':
+#     extract_all_data()
+#     print_all_data()
